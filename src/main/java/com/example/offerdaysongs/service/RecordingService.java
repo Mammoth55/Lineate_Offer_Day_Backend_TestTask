@@ -1,6 +1,6 @@
 package com.example.offerdaysongs.service;
 
-import com.example.offerdaysongs.dto.requests.CreateRecordingRequest;
+import com.example.offerdaysongs.dto.request.RecordingRequest;
 import com.example.offerdaysongs.model.Recording;
 import com.example.offerdaysongs.model.Singer;
 import com.example.offerdaysongs.repository.RecordingRepository;
@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class RecordingService {
+
     private final RecordingRepository recordingRepository;
     private final SingerRepository singerRepository;
 
@@ -30,7 +31,7 @@ public class RecordingService {
     }
 
     @Transactional
-    public Recording create(CreateRecordingRequest request) {
+    public Recording create(RecordingRequest request) {
         Recording recording = new Recording();
         recording.setTitle(request.getTitle());
         recording.setVersion(request.getVersion());

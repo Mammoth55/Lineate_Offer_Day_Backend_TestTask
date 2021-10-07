@@ -1,11 +1,8 @@
 package com.example.offerdaysongs.controller;
 
-import com.example.offerdaysongs.dto.CompanyDto;
-import com.example.offerdaysongs.dto.RecordingDto;
-import com.example.offerdaysongs.dto.SingerDto;
-import com.example.offerdaysongs.dto.requests.CreateCompanyRequest;
+import com.example.offerdaysongs.dto.response.CompanyDtoResponse;
+import com.example.offerdaysongs.dto.request.CompanyRequest;
 import com.example.offerdaysongs.model.Company;
-import com.example.offerdaysongs.model.Singer;
 import com.example.offerdaysongs.service.CompanyService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/companies")
 public class CompanyController {
+
     private static final String ID = "id";
     private final CompanyService companyService;
 
@@ -29,26 +27,23 @@ public class CompanyController {
     }
 
     @GetMapping("/")
-    public List<CompanyDto> getAll() {
+    public List<CompanyDtoResponse> getAll() {
         return companyService.getAll().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id:[\\d]+}")
-    public CompanyDto get(@PathVariable(ID) long id) {
-        var company = companyService.getById(id);
-        return convertToDto(company);
+    public CompanyDtoResponse get(@PathVariable(ID) long id) {
+        return convertToDto(companyService.getById(id));
     }
 
     @PostMapping("/")
-    public CompanyDto create(@RequestBody CreateCompanyRequest request) {
+    public CompanyDtoResponse create(@RequestBody CompanyRequest request) {
         return convertToDto(companyService.create(request));
     }
 
-
-    private CompanyDto convertToDto(Company company){
-        return new CompanyDto(company.getId(), company.getName());
+    private CompanyDtoResponse convertToDto(Company company){
+        return new CompanyDtoResponse(company.getId(), company.getName());
      }
-
 }

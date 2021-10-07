@@ -1,6 +1,6 @@
 package com.example.offerdaysongs.service;
 
-import com.example.offerdaysongs.dto.requests.CreateCompanyRequest;
+import com.example.offerdaysongs.dto.request.CompanyRequest;
 import com.example.offerdaysongs.model.Company;
 import com.example.offerdaysongs.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,7 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public List<Company> getAll()
-    {
+    public List<Company> getAll() {
         return companyRepository.findAll();
     }
 
@@ -26,7 +25,7 @@ public class CompanyService {
         return companyRepository.getById(id);
     }
 
-    public Company create(CreateCompanyRequest request) {
+    public Company create(CompanyRequest request) {
         Company company = new Company();
         company.setName(request.getName());
         return companyRepository.save(company);

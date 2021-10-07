@@ -15,3 +15,11 @@ databaseChangeLog:
         encoding: UTF-8
         path: migrations/002-fill-in-tables.sql
         relativeToChangelogFile: true
+  - changeSet:
+      id: 3
+      author: mamontov
+      comment: create new table and fill
+      sqlFile:
+        encoding: UTF-8
+        path: migrations/003-create-and-fill-copyrights.sql
+        relativeToChangelogFile: true

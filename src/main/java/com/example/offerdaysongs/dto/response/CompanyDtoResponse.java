@@ -1,11 +1,12 @@
-package com.example.offerdaysongs.dto;
+package com.example.offerdaysongs.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SingerDto {
+public class CompanyDtoResponse {
+
     long id;
     String name;
 }

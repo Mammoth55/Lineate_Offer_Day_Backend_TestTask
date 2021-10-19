@@ -33,6 +33,7 @@ public class RecordingService {
     @Transactional
     public Recording create(RecordingRequest request) {
         Recording recording = new Recording();
+        recording.setSongCode(request.getSongCode());
         recording.setTitle(request.getTitle());
         recording.setVersion(request.getVersion());
         recording.setReleaseTime(request.getReleaseTime());
@@ -47,5 +48,4 @@ public class RecordingService {
         }
         return recordingRepository.save(recording);
     }
-
 }

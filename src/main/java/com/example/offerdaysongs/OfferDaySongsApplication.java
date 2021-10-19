@@ -7,7 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(servers =  {@Server(url = "https:/"), @Server(url = "http:/")}, info = @Info(title = "OfferDay Songs API", version = "1.0", description = "OfferDay Songs API"))
+@OpenAPIDefinition(
+//        servers = {@Server(url = "https:/"), @Server(url = "http:/")},
+        info = @Info(title = "OfferDay Songs API", version = "1.0", description = "OfferDay Songs API"))
 public class OfferDaySongsApplication {
 
     public static void main(String[] args) {

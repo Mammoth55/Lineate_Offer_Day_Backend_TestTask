@@ -8,6 +8,7 @@ import java.time.ZonedDateTime;
 @Data
 public class RecordingRequest {
 
+    String songCode;
     String title;
     String version;
     ZonedDateTime releaseTime;

@@ -46,6 +46,7 @@ public class RecordingController {
     private RecordingDtoResponse convertToDto(Recording recording) {
         var singer = recording.getSinger();
         return new RecordingDtoResponse(recording.getId(),
+                                recording.getSongCode(),
                                 recording.getTitle(),
                                 recording.getVersion(),
                                 recording.getReleaseTime(),

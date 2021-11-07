@@ -48,3 +48,5 @@ Thumbs.db
 *.mov
 *.wmv
 
+/data/song.mv.db
+/data/song.trace.db

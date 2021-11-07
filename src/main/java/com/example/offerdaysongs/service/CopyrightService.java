@@ -39,8 +39,8 @@ public class CopyrightService {
     public List<Copyright> getByRecordingAndDate(String recordingName, ZonedDateTime date) {
         return copyrightRepository.findAll(Specification
                 .where(CopyrightSpecification.copyrightOnRecording(recordingName)
-                .and(CopyrightSpecification.copyrightStartBeforeDate(date))
-                .and(CopyrightSpecification.copyrightEndAfterDate(date))));
+                        .and(CopyrightSpecification.copyrightStartBeforeDate(date))
+                        .and(CopyrightSpecification.copyrightEndAfterDate(date))));
     }
 
     public SuccessDtoResponse getTotalTaxByRecordingAndDate(String recordingName, ZonedDateTime date) {
@@ -48,8 +48,10 @@ public class CopyrightService {
                 .where(CopyrightSpecification.copyrightOnRecording(recordingName)
                         .and(CopyrightSpecification.copyrightStartBeforeDate(date))
                         .and(CopyrightSpecification.copyrightEndAfterDate(date))));
-        return new SuccessDtoResponse(String.format("Total Tax by Recording and Date = %.2f",
-                copyrights.stream().mapToDouble(Copyright::getTax).sum()));
+        return new SuccessDtoResponse(String.format("Total Tax by Recording and Date = %.2f", copyrights
+                .stream()
+                .mapToDouble(Copyright::getTax)
+                .sum()));
     }
 
     @Transactional

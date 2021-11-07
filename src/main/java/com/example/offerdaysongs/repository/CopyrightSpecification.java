@@ -11,7 +11,6 @@ public class CopyrightSpecification {
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("company").get("name"), companyName);
     }
 
-
     public static Specification<Copyright> copyrightOnRecording(final String recordingName) {
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("recording").get("title"), recordingName);

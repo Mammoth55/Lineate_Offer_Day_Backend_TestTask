@@ -6,4 +6,8 @@ import lombok.Data;
 public class CompanyRequest {
 
     private String name;
+
+    public CompanyRequest(String name) {
+        this.name = name;
+    }
 }

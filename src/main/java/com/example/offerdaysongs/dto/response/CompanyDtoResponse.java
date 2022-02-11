@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-@Schema(name="CompanyDtoResponse", description = "Company Info")
+@Schema(name = "CompanyDtoResponse", description = "Company Info")
 public class CompanyDtoResponse {
 
     long id;

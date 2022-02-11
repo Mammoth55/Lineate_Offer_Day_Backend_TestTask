@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 
 @Data
 @AllArgsConstructor
-@Schema(name="RecordingDtoResponse", description = "Recording Info")
+@Schema(name = "RecordingDtoResponse", description = "Recording Info")
 public class RecordingDtoResponse {
 
     long id;

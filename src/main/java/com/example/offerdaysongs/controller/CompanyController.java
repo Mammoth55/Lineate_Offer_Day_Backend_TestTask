@@ -43,7 +43,7 @@ public class CompanyController {
         return convertToDto(companyService.create(request));
     }
 
-    private CompanyDtoResponse convertToDto(Company company){
+    private CompanyDtoResponse convertToDto(Company company) {
         return new CompanyDtoResponse(company.getId(), company.getName());
      }
 }

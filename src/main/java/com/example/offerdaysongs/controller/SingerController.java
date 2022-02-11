@@ -21,8 +21,7 @@ public class SingerController {
     private static final String ID = "id";
     private final SingerService singerService;
 
-    public SingerController(SingerService singerService)
-    {
+    public SingerController(SingerService singerService) {
         this.singerService = singerService;
     }
 
@@ -43,8 +42,7 @@ public class SingerController {
         return convertToDto(singerService.create(request));
     }
 
-    private SingerDtoResponse convertToDto(Singer singer)
-    {
+    private SingerDtoResponse convertToDto(Singer singer) {
         return new SingerDtoResponse(singer.getId(), singer.getName());
     }
 }

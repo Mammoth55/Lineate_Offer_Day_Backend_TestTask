@@ -16,7 +16,7 @@ public class Company {
 
     String name;
 
-    @OneToMany(mappedBy="company")
+    @OneToMany(mappedBy = "company")
     List<Copyright> copyrights;
 
     public Company() {

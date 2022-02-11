@@ -27,7 +27,7 @@ public class Recording {
     @JoinColumn(name = "id", insertable = false, updatable = false)
     Singer singer;
 
-    @OneToMany(mappedBy="recording")
+    @OneToMany(mappedBy = "recording")
     List<Copyright> copyrights;
 
     public Recording() {

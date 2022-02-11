@@ -12,18 +12,15 @@ public class SingerService {
 
     private final SingerRepository singerRepository;
 
-    public SingerService(SingerRepository singerRepository)
-    {
+    public SingerService(SingerRepository singerRepository) {
         this.singerRepository = singerRepository;
     }
 
-    public List<Singer> getAllSingers()
-    {
+    public List<Singer> getAllSingers() {
         return singerRepository.findAll();
     }
 
-    public Singer getById(long id)
-    {
+    public Singer getById(long id)  {
         return singerRepository.getById(id);
     }
 

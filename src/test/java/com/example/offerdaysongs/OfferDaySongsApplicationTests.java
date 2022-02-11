@@ -1,6 +1,8 @@
 package com.example.offerdaysongs;
 
+import com.example.offerdaysongs.dto.request.CompanyRequest;
 import com.example.offerdaysongs.dto.request.CopyrightRequest;
+import com.example.offerdaysongs.dto.request.SingerRequest;
 import com.example.offerdaysongs.dto.response.CompanyDtoResponse;
 import com.example.offerdaysongs.dto.response.RecordingDtoResponse;
 import com.example.offerdaysongs.dto.response.SingerDtoResponse;
@@ -58,12 +60,12 @@ class OfferDaySongsApplicationTests {
 
     @Test
     public void whenCreateCompany() throws Exception {
-        Company company = new Company(4, TEST_COMPANY_NAME);
+        Company company = new Company(5, TEST_COMPANY_NAME);
 
         Mockito.when(companyRepository.save(Mockito.any())).thenReturn(company);
 
         mockMvc.perform(post("/api/companies/")
-                        .content(objectMapper.writeValueAsString(company))
+                        .content(objectMapper.writeValueAsString(new CompanyRequest(company.getName())))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
@@ -77,7 +79,7 @@ class OfferDaySongsApplicationTests {
         Mockito.when(singerRepository.save(Mockito.any())).thenReturn(singer);
 
         mockMvc.perform(post("/api/singers/")
-                        .content(objectMapper.writeValueAsString(singer))
+                        .content(objectMapper.writeValueAsString(new SingerRequest(singer.getName())))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())

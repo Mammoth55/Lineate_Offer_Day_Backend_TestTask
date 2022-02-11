@@ -18,11 +18,11 @@ public class Copyright {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="recording_id", nullable=false)
+    @JoinColumn(name = "recording_id", nullable = false)
     private Recording recording;
 
     @ManyToOne
-    @JoinColumn(name="company_id", nullable=false)
+    @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
     private ZonedDateTime startDate;

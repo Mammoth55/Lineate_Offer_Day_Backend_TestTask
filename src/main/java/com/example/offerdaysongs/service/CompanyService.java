@@ -20,8 +20,7 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public Company getById(long id)
-    {
+    public Company getById(long id) {
         return companyRepository.getById(id);
     }
 

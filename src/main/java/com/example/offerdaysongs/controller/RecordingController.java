@@ -27,7 +27,7 @@ public class RecordingController {
     }
 
     @GetMapping("/")
-    public List<RecordingDtoResponse> getAll(){
+    public List<RecordingDtoResponse> getAll() {
         return recordingService.getAll().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());

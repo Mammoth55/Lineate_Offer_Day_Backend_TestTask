@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name="SuccessDtoResponse", description = "SuccessDtoResponse")
+@Schema(name = "SuccessDtoResponse", description = "SuccessDtoResponse")
 public class SuccessDtoResponse {
 
     @Schema(name = "description", description = "Text message of Success", required = true, example = "Success")

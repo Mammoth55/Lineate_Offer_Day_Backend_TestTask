@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 
 @Data
 @AllArgsConstructor
-@Schema(name="Copyright", description = "Copyright")
+@Schema(name = "Copyright", description = "Copyright")
 public class CopyrightDtoResponse {
 
     private long id;

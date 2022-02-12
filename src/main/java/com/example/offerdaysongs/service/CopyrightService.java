@@ -12,6 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -73,13 +75,21 @@ public class CopyrightService {
 
     private Copyright convertToCopyright(CopyrightRequest request) {
         Company company = new Company(request.getCompany().getId(), request.getCompany().getName());
-        Singer singer =
-                new Singer(request.getRecording().getSingerDto().getId(), request.getRecording().getSingerDto().getName());
-        Recording recording = new Recording(0L, request.getRecording().getSongCode(), request.getRecording().getTitle(),
-                request.getRecording().getVersion(), request.getRecording().getReleaseTime(), singer);
-        return new Copyright(0, recording, company,
-                request.getStartDate(),
-                request.getEndDate(),
-                request.getTax());
+        Singer singer = new Singer(request.getRecording().getSingerDto().getId(),
+                request.getRecording().getSingerDto().getName());
+        Recording recording = Recording.builder()
+                .songCode(request.getRecording().getSongCode())
+                .title(request.getRecording().getTitle())
+                .version(request.getRecording().getVersion())
+                .releaseTime(ZonedDateTime.parse(request.getRecording().getReleaseTime()))
+                .singer(singer)
+                .build();
+        return Copyright.builder()
+                .recording(recording)
+                .company(company)
+                .startDate(ZonedDateTime.parse(request.getStartDate()))
+                .endDate(ZonedDateTime.parse(request.getEndDate()))
+                .tax(request.getTax())
+                .build();
     }
 }

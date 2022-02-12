@@ -14,6 +14,6 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .components(new Components())
                 .info(new Info().title("Contact Application API").description(
-                        "This Spring Boot REST-service using springdoc-openapi and OpenAPI 3."));
+                        "This Spring Boot REST service using springdoc-openapi and OpenAPI 3"));
     }
 }

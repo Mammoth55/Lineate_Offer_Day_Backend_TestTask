@@ -8,6 +8,7 @@ import com.example.offerdaysongs.repository.SingerRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -32,20 +33,17 @@ public class RecordingService {
 
     @Transactional
     public Recording create(RecordingRequest request) {
-        Recording recording = new Recording();
-        recording.setSongCode(request.getSongCode());
-        recording.setTitle(request.getTitle());
-        recording.setVersion(request.getVersion());
-        recording.setReleaseTime(request.getReleaseTime());
-        var singerDto = request.getSinger();
-        if (singerDto != null) {
-            var singer = singerRepository.findById(singerDto.getId()).orElseGet(() -> {
-                var temp = new Singer();
-                temp.setName(singerDto.getName());
-                return singerRepository.save(temp);
-            });
-            recording.setSinger(singer);
+        String singerName = request.getSinger().getName();
+        Singer singer = singerRepository.getByName(singerName);
+        if (singer == null) {
+            singer = singerRepository.save(Singer.builder().name(singerName).build());
         }
-        return recordingRepository.save(recording);
+        return recordingRepository.save(Recording.builder()
+                .songCode(request.getSongCode())
+                .title(request.getTitle())
+                .version(request.getVersion())
+                .releaseTime(ZonedDateTime.parse(request.getReleaseTime()))
+                .singer(singer)
+                .build());
     }
 }

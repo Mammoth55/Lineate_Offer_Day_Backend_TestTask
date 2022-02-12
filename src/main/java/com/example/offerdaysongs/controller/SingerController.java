@@ -4,12 +4,8 @@ import com.example.offerdaysongs.dto.response.SingerDtoResponse;
 import com.example.offerdaysongs.dto.request.SingerRequest;
 import com.example.offerdaysongs.model.Singer;
 import com.example.offerdaysongs.service.SingerService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,21 +21,26 @@ public class SingerController {
         this.singerService = singerService;
     }
 
-    @GetMapping("/{id:[\\d]+}")
-    public SingerDtoResponse get(@PathVariable(ID) long id) {
-        return convertToDto(singerService.getById(id));
+    @GetMapping("/")
+    public ResponseEntity<List<SingerDtoResponse>> getAll() {
+        return ResponseEntity.ok().body(singerService.getAll().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList()));
     }
 
-    @GetMapping("/")
-    public List<SingerDtoResponse> getAll() {
-        return singerService.getAllSingers().stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+    @GetMapping("/{id:[\\d]+}")
+    public ResponseEntity<SingerDtoResponse> getById(@PathVariable(ID) long id) {
+        return ResponseEntity.ok().body(convertToDto(singerService.getById(id)));
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<SingerDtoResponse> getByName(@RequestParam(name = "name", required = false) String name) {
+        return ResponseEntity.ok().body(convertToDto(singerService.getByName(name)));
     }
 
     @PostMapping("/")
-    public SingerDtoResponse create(@RequestBody SingerRequest request) {
-        return convertToDto(singerService.create(request));
+    public ResponseEntity<SingerDtoResponse> create(@RequestBody SingerRequest request) {
+        return ResponseEntity.ok().body(convertToDto(singerService.create(request)));
     }
 
     private SingerDtoResponse convertToDto(Singer singer) {

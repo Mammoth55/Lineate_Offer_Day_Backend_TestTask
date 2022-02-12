@@ -1,10 +1,11 @@
 package com.example.offerdaysongs.controller;
 
-import com.example.offerdaysongs.dto.response.RecordingDtoResponse;
+import com.example.offerdaysongs.dto.response.RecordingDto;
 import com.example.offerdaysongs.dto.response.SingerDtoResponse;
 import com.example.offerdaysongs.dto.request.RecordingRequest;
 import com.example.offerdaysongs.model.Recording;
 import com.example.offerdaysongs.service.RecordingService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,29 +28,29 @@ public class RecordingController {
     }
 
     @GetMapping("/")
-    public List<RecordingDtoResponse> getAll() {
-        return recordingService.getAll().stream()
+    public ResponseEntity<List<RecordingDto>> getAll() {
+        return ResponseEntity.ok().body(recordingService.getAll().stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/{id:[\\d]+}")
-    public RecordingDtoResponse get(@PathVariable(ID) long id) {
-        return convertToDto(recordingService.getById(id));
+    public ResponseEntity<RecordingDto> getById(@PathVariable(ID) long id) {
+        return ResponseEntity.ok().body(convertToDto(recordingService.getById(id)));
     }
 
     @PostMapping("/")
-    public RecordingDtoResponse create(@RequestBody RecordingRequest request) {
-        return convertToDto(recordingService.create(request));
+    public ResponseEntity<RecordingDto> create(@RequestBody RecordingRequest request) {
+        return ResponseEntity.ok().body(convertToDto(recordingService.create(request)));
     }
 
-    private RecordingDtoResponse convertToDto(Recording recording) {
+    private RecordingDto convertToDto(Recording recording) {
         var singer = recording.getSinger();
-        return new RecordingDtoResponse(recording.getId(),
+        return new RecordingDto(recording.getId(),
                                 recording.getSongCode(),
                                 recording.getTitle(),
                                 recording.getVersion(),
-                                recording.getReleaseTime(),
+                                recording.getReleaseTime().toString(),
                                 singer != null ? new SingerDtoResponse(singer.getId(), singer.getName()) : null);
     }
 }

@@ -16,7 +16,7 @@ public class SingerService {
         this.singerRepository = singerRepository;
     }
 
-    public List<Singer> getAllSingers() {
+    public List<Singer> getAll() {
         return singerRepository.findAll();
     }
 
@@ -24,9 +24,11 @@ public class SingerService {
         return singerRepository.getById(id);
     }
 
+    public Singer getByName(String name) {
+        return singerRepository.getByName(name);
+    }
+
     public Singer create(SingerRequest request) {
-        Singer singer = new Singer();
-        singer.setName(request.getName());
-        return singerRepository.save(singer);
+        return singerRepository.save(Singer.builder().name(request.getName()).build());
     }
 }

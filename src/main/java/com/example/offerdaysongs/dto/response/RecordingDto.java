@@ -3,13 +3,13 @@ package com.example.offerdaysongs.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.ZonedDateTime;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Schema(name = "RecordingDtoResponse", description = "Recording Info")
-public class RecordingDtoResponse {
+public class RecordingDto {
 
     long id;
 
@@ -23,7 +23,7 @@ public class RecordingDtoResponse {
     String version;
 
     @Schema(name = "releaseTime", description = "Date of Recording release", required = true, example = "1984-06-06")
-    ZonedDateTime releaseTime;
+    String releaseTime;
 
     @Schema(name = "singer", description = "singer", required = true)
     SingerDtoResponse singerDto;

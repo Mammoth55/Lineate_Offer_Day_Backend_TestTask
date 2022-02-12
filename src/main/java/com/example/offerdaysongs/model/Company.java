@@ -12,12 +12,12 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
 
-    String name;
+    private String name;
 
     @OneToMany(mappedBy = "company")
-    List<Copyright> copyrights;
+    private List<Copyright> copyrights;
 
     public Company() {
         this.copyrights = new ArrayList<>();

@@ -1,6 +1,6 @@
 package com.example.offerdaysongs.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -8,39 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Recording {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String songCode;
+    private String songCode;
 
-    String title;
+    private String title;
 
-    String version;
+    private String version;
 
-    ZonedDateTime releaseTime;
+    private ZonedDateTime releaseTime;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", insertable = false, updatable = false)
-    Singer singer;
+    private Singer singer;
 
     @OneToMany(mappedBy = "recording")
-    List<Copyright> copyrights;
-
-    public Recording() {
-        this.copyrights = new ArrayList<>();
-    }
-
-    public Recording(Long id, String songCode, String title, String version, ZonedDateTime releaseTime, Singer singer) {
-        this.id = id;
-        this.songCode = songCode;
-        this.title = title;
-        this.version = version;
-        this.releaseTime = releaseTime;
-        this.singer = singer;
-        this.copyrights = new ArrayList<>();
-    }
+    private List<Copyright> copyrights;
 }

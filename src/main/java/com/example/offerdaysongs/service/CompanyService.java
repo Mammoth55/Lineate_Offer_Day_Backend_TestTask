@@ -25,8 +25,6 @@ public class CompanyService {
     }
 
     public Company create(CompanyRequest request) {
-        Company company = new Company();
-        company.setName(request.getName());
-        return companyRepository.save(company);
+        return companyRepository.save(new Company(0, request.getName()));
     }
 }

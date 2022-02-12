@@ -1,10 +1,11 @@
 package com.example.offerdaysongs.controller;
 
-import com.example.offerdaysongs.dto.response.CompanyDtoResponse;
+import com.example.offerdaysongs.dto.response.CompanyDto;
 import com.example.offerdaysongs.dto.request.CompanyRequest;
 import com.example.offerdaysongs.model.Company;
 import com.example.offerdaysongs.service.CompanyService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,23 +28,23 @@ public class CompanyController {
     }
 
     @GetMapping("/")
-    public List<CompanyDtoResponse> getAll() {
-        return companyService.getAll().stream()
+    public ResponseEntity<List<CompanyDto>> getAll() {
+        return ResponseEntity.ok().body(companyService.getAll().stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/{id:[\\d]+}")
-    public CompanyDtoResponse get(@PathVariable(ID) long id) {
-        return convertToDto(companyService.getById(id));
+    public ResponseEntity<CompanyDto> getById(@PathVariable(ID) long id) {
+        return ResponseEntity.ok().body(convertToDto(companyService.getById(id)));
     }
 
     @PostMapping("/")
-    public CompanyDtoResponse create(@RequestBody CompanyRequest request) {
-        return convertToDto(companyService.create(request));
+    public ResponseEntity<CompanyDto> create(@RequestBody CompanyRequest request) {
+        return ResponseEntity.ok().body(convertToDto(companyService.create(request)));
     }
 
-    private CompanyDtoResponse convertToDto(Company company) {
-        return new CompanyDtoResponse(company.getId(), company.getName());
+    private CompanyDto convertToDto(Company company) {
+        return new CompanyDto(company.getId(), company.getName());
      }
 }

@@ -46,7 +46,7 @@ public class CopyrightController {
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
-        return new ResponseEntity<>(copyrightDtoResponses, HttpStatus.OK);
+        return ResponseEntity.ok().body(copyrightDtoResponses);
     }
 
     @Operation(summary = "Get Copyright by ID",
@@ -56,7 +56,7 @@ public class CopyrightController {
             content = @Content(schema = @Schema(implementation = CopyrightDtoResponse.class)))})
     @GetMapping("/{id:[\\d]+}")
     public ResponseEntity<CopyrightDtoResponse> getById(@PathVariable(ID) long id) {
-        return new ResponseEntity<>(convertToDto(copyrightService.getById(id)), HttpStatus.OK);
+        return ResponseEntity.ok().body(convertToDto(copyrightService.getById(id)));
     }
 
     @Operation(summary = "Get all Copyrights by Company",
@@ -70,7 +70,7 @@ public class CopyrightController {
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
-        return new ResponseEntity<>(copyrightDtoResponses, HttpStatus.OK);
+        return ResponseEntity.ok().body(copyrightDtoResponses);
     }
 
     @Operation(summary = "Get all Copyrights by Recording and Date",
@@ -87,7 +87,7 @@ public class CopyrightController {
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
-        return new ResponseEntity<>(copyrightDtoResponses, HttpStatus.OK);
+        return ResponseEntity.ok().body(copyrightDtoResponses);
     }
 
     @Operation(summary = "Get Total Tax by Recording and Date",
@@ -99,8 +99,8 @@ public class CopyrightController {
     public ResponseEntity<SuccessDtoResponse> getTotalTaxByRecordingAndDate(
             @RequestParam(name = "recording") String recordingTitle,
             @RequestParam(name = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-        return new ResponseEntity<>(copyrightService.getTotalTaxByRecordingAndDate(recordingTitle,
-                ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())), HttpStatus.OK);
+        return ResponseEntity.ok().body(copyrightService.getTotalTaxByRecordingAndDate(recordingTitle,
+                ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())));
     }
 
     @Operation(summary = "Create Copyright",
@@ -110,7 +110,7 @@ public class CopyrightController {
             content = @Content(schema = @Schema(implementation = CopyrightDtoResponse.class)))})
     @PostMapping("/")
     public ResponseEntity<CopyrightDtoResponse> create(@RequestBody CopyrightRequest request) {
-        return new ResponseEntity<>(convertToDto(copyrightService.create(request)), HttpStatus.OK);
+        return ResponseEntity.ok().body(convertToDto(copyrightService.create(request)));
     }
 
     @Operation(summary = "Update Copyright",
@@ -120,7 +120,7 @@ public class CopyrightController {
             content = @Content(schema = @Schema(implementation = CopyrightDtoResponse.class)))})
     @PutMapping("/{id:[\\d]+}")
     public ResponseEntity<CopyrightDtoResponse> update(@PathVariable(ID) long id, @RequestBody CopyrightRequest request) {
-        return new ResponseEntity<>(convertToDto(copyrightService.update(id, request)), HttpStatus.OK);
+        return ResponseEntity.ok().body(convertToDto(copyrightService.update(id, request)));
     }
 
     @Operation(summary = "Delete Copyright",
@@ -131,23 +131,28 @@ public class CopyrightController {
     @DeleteMapping("/{id:[\\d]+}")
     public ResponseEntity<SuccessDtoResponse> delete(@PathVariable(ID) long id) {
         copyrightService.deleteById(id);
-        return new ResponseEntity<>(new SuccessDtoResponse("Success"), HttpStatus.OK);
+        return ResponseEntity.ok().body(new SuccessDtoResponse("Success"));
     }
 
     private CopyrightDtoResponse convertToDto(Copyright copyright) {
-        CompanyDtoResponse companyDtoResponse =
-                new CompanyDtoResponse(copyright.getCompany().getId(), copyright.getCompany().getName());
-        SingerDtoResponse singerDtoResponse = new SingerDtoResponse(copyright.getRecording().getSinger().getId(),
+        CompanyDto companyDto =
+                new CompanyDto(copyright.getCompany().getId(), copyright.getCompany().getName());
+        SingerDtoResponse singerDtoResponse = new SingerDtoResponse(
+                copyright.getRecording().getSinger().getId(),
                 copyright.getRecording().getSinger().getName());
-        RecordingDtoResponse recordingDtoResponse =
-                new RecordingDtoResponse(copyright.getRecording().getId(), copyright.getRecording().getSongCode(),
-                        copyright.getRecording().getTitle(), copyright.getRecording().getVersion(),
-                        copyright.getRecording().getReleaseTime(), singerDtoResponse);
+        RecordingDto recordingDto =
+                new RecordingDto(copyright.getRecording().getId(),
+                        copyright.getRecording().getSongCode(),
+                        copyright.getRecording().getTitle(),
+                        copyright.getRecording().getVersion(),
+                        copyright.getRecording().getReleaseTime().toString(),
+                        singerDtoResponse);
         return new CopyrightDtoResponse(
                 copyright.getId(),
-                recordingDtoResponse,
-                companyDtoResponse,
-                copyright.getStartDate(),
-                copyright.getEndDate(), copyright.getTax());
+                recordingDto,
+                companyDto,
+                copyright.getStartDate().toString(),
+                copyright.getEndDate().toString(),
+                copyright.getTax());
     }
 }

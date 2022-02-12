@@ -23,8 +23,5 @@
 Java 11, Spring, JPA, H2
 
 ## Инструкция
-- Скопировать к себе проект из репозитория.
-https://bitbucket.org/thumbtacktech/lineate-offer-day-backend/src/master/
 - Выполнить задание.
 - Залить в личный репозиторий. Можно слинковать свой репозиторий с ReplIt.
-- Выслать ссылку на репозиторий или на replit на offer-day@lineate.com
